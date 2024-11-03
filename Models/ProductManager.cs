@@ -8,19 +8,35 @@ public class ProductManager{
     }
 
     public decimal CalculateTotalPrice(){
-         decimal total = 0;
+        decimal total = 0;
         foreach (var product in products)
         {
-            decimal tax = product.Category == "Electrónica" ? 1.10m : 1.05m;
-            total += product.Price * tax;
+            total += product.Price * GetTaxRate(product.Category);
         }
         return total;
+    }
+
+       public decimal GetTaxRate(string category)
+    {
+        return category switch
+        {
+            "Electrónica" => 1.10m,
+            "Alimentos" => 1.05m,
+            _ => throw new ArgumentException("Categoría inexistente.")
+        };
     }
 
     public Product FindProductById(int id)
         {
             var product = products.Find(p => p.Id == id);
             if(product == null)throw new ArgumentException("No existe un producto con ese ID.");
+            return product;
+        }
+
+        public Product FindProductByName(string name)
+        {
+            var product = products.Find(p => p.Name == name);
+            if(product == null)throw new ArgumentException("No existe un producto con ese nombre.");
             return product;
         }
 }
