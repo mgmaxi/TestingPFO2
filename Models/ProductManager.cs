@@ -1,15 +1,15 @@
 public class ProductManager{
 
     public int Id { get; set; }
-    public List<Product> Products { get; set; } = new List<Product>();
+    public List<Product> products { get; set; } = new List<Product>();
     
-    public void addProduct(Product product){
-        Products.Add(product);
+    public void AddProduct(Product product){
+        products.Add(product);
     }
 
-    public decimal calculateTotalPrice(){
+    public decimal CalculateTotalPrice(){
          decimal total = 0;
-        foreach (var product in Products)
+        foreach (var product in products)
         {
             decimal tax = product.Category == "Electrónica" ? 1.10m : 1.05m;
             total += product.Price * tax;
@@ -17,4 +17,10 @@ public class ProductManager{
         return total;
     }
 
+    public Product FindProductById(int id)
+        {
+            var product = products.Find(p => p.Id == id);
+            if(product == null)throw new ArgumentException("No existe un producto con ese ID.");
+            return product;
+        }
 }
