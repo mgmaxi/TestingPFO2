@@ -28,15 +28,13 @@ public class ProductManager{
 
     public Product FindProductById(int id)
         {
-            var product = products.Find(p => p.Id == id);
-            if(product == null)throw new ArgumentException("No existe un producto con ese ID.");
+            var product = products.Find(p => p.Id == id) ?? throw new ArgumentException("No existe un producto con ese ID.");
             return product;
         }
 
         public Product FindProductByName(string name)
         {
-            var product = products.Find(p => p.Name == name);
-            if(product == null)throw new ArgumentException("No existe un producto con ese nombre.");
+            var product = products.Find(p => p.Name == name) ?? throw new ArgumentException("No existe un producto con ese nombre.");
             return product;
         }
 }
